@@ -1,0 +1,20 @@
+{
+  "name": "blockchain-based-supply-chain-system-for-tracking-tv-damage",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/AdahZoeUfedo/Blockchain-Based-Supply-Chain-System-for-Tracking-TV-Damage#readme",
+  "bugs": {
+    "url": "https://github.com/AdahZoeUfedo/Blockchain-Based-Supply-Chain-System-for-Tracking-TV-Damage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdahZoeUfedo/Blockchain-Based-Supply-Chain-System-for-Tracking-TV-Damage.git"
+  },
+  "license": "ISC",
+  "author": "ELuD",
+  "type": "commonjs",
+  "main": "NetworkSynchronisation/blockchain.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
