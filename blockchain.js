@@ -1,3 +1,4 @@
+const { connectDB } = require('./db');
 const sha256 = require('sha256');
 const crypto = require('crypto');
 
@@ -14,18 +15,25 @@ class Blockchain {
     // 🔗 BLOCKS (BLOCK LINKING)
     // =========================
 
-    createNewBlock(previousBlockHash) {
-        const block = {
-            index: this.chain.length + 1,
-            timestamp: Date.now(),
-            transactions: this.pendingTransactions,
-            previousBlockHash,
-            hash: this.hashBlock(previousBlockHash, this.pendingTransactions)
+async createNewBlock(previousBlockHash) {
+    const block = {
+        index: this.chain.length + 1,
+        timestamp: Date.now(),
+        transactions: this.pendingTransactions,
+        previousBlockHash,
+        hash: this.hashBlock(previousBlockHash, this.pendingTransactions)
         };
 
         this.pendingTransactions = [];
         this.chain.push(block);
-        return block;
+
+        // 💾 SAVE TO MONGODB
+    const db = await connectDB();
+    await db.collection('blocks').insertOne(block);
+
+    console.log(`🧱 Block ${block.index} saved to MongoDB`);
+
+    return block;
     }
 
     getLastBlock() {
@@ -119,10 +127,10 @@ class Blockchain {
         if (history.length === 0) {
             return newLocation === 'Factory';
         }
-
+//The line below says give me the most recent transaction for this TV
         const lastTx = history[history.length - 1];
 
-        // Rule 2: No scans after damage
+         // Rule 2: No scans after damage
         if (lastTx.condition === 'DAMAGED') return false;
 
         // Rule 3: Cannot scan same location twice

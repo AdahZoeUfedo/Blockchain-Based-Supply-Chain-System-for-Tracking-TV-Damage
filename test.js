@@ -1,3 +1,4 @@
+(async () => {
 const Blockchain = require('./blockchain');
 
 const supplyChain = new Blockchain();
@@ -25,7 +26,7 @@ try {
     );
 
     // Mine block
-    supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
+    await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
     // 2️⃣ Truck scan (VALID)
     supplyChain.createScanTransaction(
@@ -37,7 +38,7 @@ try {
         driverKeys.publicKey
     );
 
-    supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
+    await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
     // 3️⃣ Warehouse scan (DAMAGED) (VALID)
     supplyChain.createScanTransaction(
@@ -49,7 +50,7 @@ try {
         warehouseKeys.publicKey
     );
 
-    supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
+    await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
     console.log('✔ All valid scans passed');
 
@@ -100,7 +101,7 @@ try {
         factoryKeys.publicKey
     );
 
-    supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
+    await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
     supplyChain.createScanTransaction(
         'TV-LG-003',
@@ -125,7 +126,7 @@ try {
         factoryKeys.publicKey
     );
 
-    supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
+    await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
     supplyChain.createScanTransaction(
         'TV-SONY-004',
@@ -200,3 +201,4 @@ supplyChain.chain.forEach((block, blockIndex) => {
         );
     });
 });
+})();
