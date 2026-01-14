@@ -12,7 +12,7 @@ class Blockchain {
     }
 
     // =========================
-    // 🔗 BLOCKS (BLOCK LINKING)
+    // BLOCKS (BLOCK LINKING)
     // =========================
 
 async createNewBlock(previousBlockHash) {
@@ -27,30 +27,33 @@ async createNewBlock(previousBlockHash) {
         this.pendingTransactions = [];
         this.chain.push(block);
 
-        // 💾 SAVE TO MONGODB
+        //  SAVE TO MONGODB
     const db = await connectDB();
     await db.collection('blocks').insertOne(block);
 
-    console.log(`🧱 Block ${block.index} saved to MongoDB`);
+    console.log(`Block ${block.index} saved to MongoDB`);
 
     return block;
     }
 
+    //link the next block correctly
     getLastBlock() {
         return this.chain[this.chain.length - 1];
     }
 
+    //block hash depends on previous block and all transactions
     hashBlock(previousBlockHash, transactions) {
         return sha256(
             previousBlockHash +
-            JSON.stringify(transactions)
+            JSON.stringify(transactions) //we stringify it because hash functions only work on strings
         );
     }
 
     // =========================
-    // 🔑 KEYS & SIGNATURES
+    //  KEYS & SIGNATURES
     // =========================
 
+    //Each participant in the supply chain has a cryptographic identity created using elliptic curve cryptography. They sign every scan with their private key, and anyone can verify the authenticity using the public key.
     createKeyPair() {
         return crypto.generateKeyPairSync('ec', {
             namedCurve: 'secp256k1',
@@ -75,13 +78,13 @@ async createNewBlock(previousBlockHash) {
         return verify.verify(transaction.publicKey, transaction.signature, 'hex');
     }
 
-    // =========================
-    // 📦 TRANSACTIONS
-    // =========================
+    
+    //  TRANSACTIONS
+    
 
     createScanTransaction(tvId, location, handler, condition, privateKey, publicKey) {
 
-        // 🧠 SMART CONTRACT CHECKS
+        //  SMART CONTRACT CHECKS
         if (!this.isValidNextScan(tvId, location, handler)) {
             throw new Error(`Smart Contract Violation for ${tvId}`);
         }
@@ -112,13 +115,12 @@ async createNewBlock(previousBlockHash) {
         );
     }
 
-    // =========================
-    // 🧠 SMART CONTRACT RULES
-    // =========================
+    //  SMART CONTRACT RULES
 
     isValidNextScan(tvId, newLocation, newHandler) {
         const locationOrder = ['Factory', 'Truck', 'Warehouse'];
 
+//collects all transactions from all blocks and flatens them into a single list so smart contracts can check the full history then filters all transactions belonging to one tv only
         const history = this.chain
             .flatMap(block => block.transactions)
             .filter(tx => tx.tvId === tvId);

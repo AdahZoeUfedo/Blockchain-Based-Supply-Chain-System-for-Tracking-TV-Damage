@@ -3,19 +3,19 @@ const Blockchain = require('./blockchain');
 
 const supplyChain = new Blockchain();
 
-// =========================
-// 🔑 CREATE KEY PAIRS
-// =========================
+
+//  CREATE KEY PAIRS
+
 const factoryKeys = supplyChain.createKeyPair();
 const driverKeys = supplyChain.createKeyPair();
 const warehouseKeys = supplyChain.createKeyPair();
 
 console.log('\n==============================');
-console.log('✅ VALID SCANS');
+console.log(' VALID SCANS');
 console.log('==============================\n');
 
 try {
-    // 1️⃣ Factory scan (VALID)
+    //1. Factory scan (VALID)
     supplyChain.createScanTransaction(
         'TV-SAMSUNG-001',
         'Factory',
@@ -28,7 +28,7 @@ try {
     // Mine block
     await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
-    // 2️⃣ Truck scan (VALID)
+    // 2.Truck scan (VALID)
     supplyChain.createScanTransaction(
         'TV-SAMSUNG-001',
         'Truck',
@@ -40,7 +40,7 @@ try {
 
     await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
-    // 3️⃣ Warehouse scan (DAMAGED) (VALID)
+    // 3. Warehouse scan (DAMAGED) (VALID)
     supplyChain.createScanTransaction(
         'TV-SAMSUNG-001',
         'Warehouse',
@@ -52,17 +52,17 @@ try {
 
     await supplyChain.createNewBlock(supplyChain.getLastBlock().hash);
 
-    console.log('✔ All valid scans passed');
+    console.log('All valid scans passed');
 
 } catch (error) {
-    console.error('❌ Unexpected error:', error.message);
+    console.error('Unexpected error:', error.message);
 }
 
 console.log('\n==============================');
-console.log('❌ INVALID SCANS (RULE TESTS)');
+console.log('INVALID SCANS (RULE TESTS)');
 console.log('==============================\n');
 
-// ❌ Rule 1: Skipping Factory
+// Try Rule 1: Skipping Factory
 try {
     supplyChain.createScanTransaction(
         'TV-LG-002',
@@ -73,10 +73,10 @@ try {
         driverKeys.publicKey
     );
 } catch (error) {
-    console.log('Rule 1 Violation caught ✔');
+    console.log('Rule 1 Violation caught ');
 }
 
-// ❌ Rule 2: Scan after DAMAGED
+// Try Rule 2: Scan after DAMAGED
 try {
     supplyChain.createScanTransaction(
         'TV-SAMSUNG-001',
@@ -87,10 +87,10 @@ try {
         factoryKeys.publicKey
     );
 } catch (error) {
-    console.log('Rule 2 Violation caught ✔');
+    console.log('Rule 2 Violation caught ');
 }
 
-// ❌ Rule 3: Same location twice
+// Test Rule 3: Same location twice
 try {
     supplyChain.createScanTransaction(
         'TV-LG-003',
@@ -112,10 +112,10 @@ try {
         factoryKeys.publicKey
     );
 } catch (error) {
-    console.log('Rule 3 Violation caught ✔');
+    console.log('Rule 3 Violation caught ');
 }
 
-// ❌ Rule 4: Same handler twice
+// Test Rule 4: Same handler twice
 try {
     supplyChain.createScanTransaction(
         'TV-SONY-004',
@@ -131,27 +131,27 @@ try {
     supplyChain.createScanTransaction(
         'TV-SONY-004',
         'Truck',
-        'Factory Manager', // ❌ same handler
+        'Factory Manager', // same handler
         'OK',
         factoryKeys.privateKey,
         factoryKeys.publicKey
     );
 } catch (error) {
-    console.log('Rule 4 Violation caught ✔');
+    console.log('Rule 4 Violation caught ');
 }
 
 console.log('\n==============================');
-console.log('🔗 BLOCKCHAIN STATE');
+console.log('BLOCKCHAIN STATE');
 console.log('==============================\n');
 
 console.log(JSON.stringify(supplyChain.chain, null, 2));
 
 console.log('\n==============================');
-console.log('🔐 VERIFY DIGITAL SIGNATURES');
+console.log(' VERIFY DIGITAL SIGNATURES');
 console.log('==============================\n');
 //announcing blame detection
 console.log('\n==============================');
-console.log('⚖️ BLAME DETECTION');
+console.log(' BLAME DETECTION');
 console.log('==============================\n');
 
 const blame = detectBlame(supplyChain.chain, 'TV-SAMSUNG-001');
@@ -160,14 +160,14 @@ if (typeof blame === 'string') {
     console.log(blame);
 } else {
     console.log(
-        `🚨 TV damaged after approval by ${blame.responsibleHandler} ` +
+        `TV damaged after approval by ${blame.responsibleHandler} ` +
         `at ${blame.location}`
     );
 }
 
 
 // ===============================
-// ⚖️ BLAME DETECTION HELPER
+// BLAME DETECTION HELPER
 // ===============================
 function detectBlame(chain, tvId) {
     const history = chain
