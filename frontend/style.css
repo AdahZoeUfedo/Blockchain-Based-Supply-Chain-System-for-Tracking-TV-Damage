@@ -1,0 +1,137 @@
+/* ======================
+   GLOBAL STYLES
+====================== */
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f7f9fb;
+    color: #2b2b2b;
+}
+
+/* ======================
+   HEADER
+====================== */
+
+.header {
+    background-color: #2ec4b6; /* Seafoam green */
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.header p {
+    margin-top: 8px;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ======================
+   LAYOUT
+====================== */
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ======================
+   CARD STYLE
+====================== */
+
+.card {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #2ec4b6;
+}
+
+/* ======================
+   FORM ELEMENTS
+====================== */
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ======================
+   BUTTONS
+====================== */
+
+button {
+    margin-top: 20px;
+    padding: 12px;
+    width: 100%;
+    background-color: #2ec4b6;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #27b1a5;
+}
+
+/* ======================
+   OUTPUT TEXT
+====================== */
+
+#scanMessage,
+#blameResult {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* ======================
+   BLOCKCHAIN VIEWER
+====================== */
+
+#blockchain {
+    margin-top: 20px;
+}
+
+.block {
+    padding: 15px;
+    border-left: 4px solid #2ec4b6;
+    background-color: #f1fdfb;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}

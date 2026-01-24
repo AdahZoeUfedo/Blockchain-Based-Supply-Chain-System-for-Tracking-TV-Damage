@@ -1,0 +1,192 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blockchain Supply Chain Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #222;
+        }
+
+        section {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        pre {
+            background: #111;
+            color: #0f0;
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📦 Blockchain Supply Chain System</h1>
+
+<section>
+    <h2>➕ Create Scan Transaction</h2>
+
+    <input id="tvId" placeholder="TV ID (e.g TV-SAMSUNG-001)">
+    <input id="location" placeholder="Location (Factory / Truck / Warehouse)">
+    <input id="handler" placeholder="Handler Name">
+    <input id="condition" placeholder="Condition (OK / DAMAGED)">
+    <textarea id="privateKey" placeholder="Private Key"></textarea>
+    <textarea id="publicKey" placeholder="Public Key"></textarea>
+
+    <button onclick="createTransaction()">Create Transaction</button>
+</section>
+
+<section>
+    <h2>⛏️ Mine Block</h2>
+    <button onclick="mineBlock()">Mine Block</button>
+</section>
+
+<section>
+    <h2>🔗 Blockchain</h2>
+    <button onclick="viewBlockchain()">View Blockchain</button>
+    <pre id="blockchainOutput"></pre>
+</section>
+
+<script>
+const API = "http://localhost:3001";
+
+async function createTransaction() {
+    const res = await fetch(`${API}/transaction`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tvId: tvId.value,
+            location: location.value,
+            handler: handler.value,
+            condition: condition.value,
+            privateKey: privateKey.value,
+            publicKey: publicKey.value
+        })
+    });
+
+    const data = await res.json();
+    alert(JSON.stringify(data, null, 2));
+}
+
+async function mineBlock() {
+    const res = await fetch(`${API}/mine`, { method: "POST" });
+    const data = await res.json();
+    alert("Block mined!");
+}
+
+async function viewBlockchain() {
+    const res = await fetch(`${API}/blockchain`);
+    const data = await res.json();
+    blockchainOutput.textContent = JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TV Supply Chain Damage Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <h1>TV Supply Chain Damage Tracker</h1>
+        <p>Blockchain-based accountability system</p>
+    </header>
+
+    <main class="container">
+
+        <!-- ================= SCAN TV ================= -->
+        <section class="card">
+            <h2>Scan a TV</h2>
+
+            <label>TV ID</label>
+            <input type="text" id="tvId" placeholder="TV-SAMSUNG-001">
+
+            <label>Location</label>
+            <select id="location">
+                <option value="Factory">Factory</option>
+                <option value="Truck">Truck</option>
+                <option value="Warehouse">Warehouse</option>
+            </select>
+
+            <label>Handler</label>
+            <select id="handler">
+                <option value="Factory Manager">Factory Manager</option>
+                <option value="Truck Driver">Truck Driver</option>
+                <option value="Warehouse Manager">Warehouse Manager</option>
+            </select>
+
+            <label>Condition</label>
+            <select id="condition">
+                <option value="OK">OK</option>
+                <option value="DAMAGED">DAMAGED</option>
+            </select>
+
+            <label>Private Key</label>
+            <textarea id="privateKey" placeholder="Paste private key here"></textarea>
+
+            <label>Public Key</label>
+            <textarea id="publicKey" placeholder="Paste public key here"></textarea>
+
+            <button id="scanBtn">Scan & Sign Transaction</button>
+
+            <p id="scanMessage"></p>
+        </section>
+
+        <!-- ================= BLOCKCHAIN VIEWER ================= -->
+        <section class="card">
+            <h2>Blockchain Viewer</h2>
+            <button id="loadChainBtn">Load Blockchain</button>
+            <div id="blockchain"></div>
+        </section>
+
+        <!-- ================= BLAME DETECTION ================= -->
+        <section class="card">
+            <h2>Blame Detection</h2>
+
+            <label>TV ID</label>
+            <input type="text" id="blameTvId" placeholder="TV-SAMSUNG-001">
+
+            <button id="detectBlameBtn">Detect Responsibility</button>
+
+            <p id="blameResult"></p>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
