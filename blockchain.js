@@ -23,7 +23,7 @@ async createNewBlock(previousBlockHash) {
         previousBlockHash,
         hash: this.hashBlock(previousBlockHash, this.pendingTransactions)
         };
-
+//After creating the block, reset pending transactions and add block to the blockchain
         this.pendingTransactions = [];
         this.chain.push(block);
 
@@ -41,7 +41,7 @@ async createNewBlock(previousBlockHash) {
         return this.chain[this.chain.length - 1];
     }
 
-    //block hash depends on previous block and all transactions
+    //block hash depends on previous block and all transactions. Any change to transactions or previous hash produces a completely different block hash
     hashBlock(previousBlockHash, transactions) {
         return sha256(
             previousBlockHash +
@@ -148,3 +148,15 @@ async createNewBlock(previousBlockHash) {
 }
 
 module.exports = Blockchain;
+
+
+/*-----BEGIN PRIVATE KEY-----
+MIGEAgEAMBAGByqGSM49AgEGBSuBBAAKBG0wawIBAQQgrlPZjaqb3wOB9mC7eH/o
+fOBPg3UVxk/D7Fbuw4yJn+GhRANCAATKIGbyYLU64RbamPz5oA5fuRsfJMr5Kh39
+NMnAqOWYbua82uwzKhTePb0khTWdfJXdN3MvFYTGravyf3syots3
+-----END PRIVATE KEY-----
+
+-----BEGIN PUBLIC KEY-----
+MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEhdGWlZJH++mPXajV8DGDTRySCuQfY1wB
+UfuwO6ofhaC/W2jkTjEJoLmpJI3dvJ9zXJDhuUe2eh7VTmi283QC5w==
+-----END PUBLIC KEY----- */

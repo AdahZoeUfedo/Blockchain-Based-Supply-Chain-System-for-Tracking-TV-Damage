@@ -14,7 +14,7 @@ document.getElementById('scanBtn').addEventListener('click', async () => {
     messageEl.textContent = '';
 
     try {
-        const response = await fetch('http://localhost:3000/scan', {
+        const response = await fetch('/scan', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -85,7 +85,7 @@ document.getElementById('detectBlameBtn').addEventListener('click', async () => 
         const response = await fetch(`/blame/${tvId}`);
         const data = await response.json();
 
-        resultEl.style.color = '#2ec4b6';
+        resultEl.style.color = '#22a397';
         resultEl.textContent = data.result;
 
     } catch (error) {
@@ -93,3 +93,4 @@ document.getElementById('detectBlameBtn').addEventListener('click', async () => 
         resultEl.textContent = 'Error detecting blame';
     }
 });
+
